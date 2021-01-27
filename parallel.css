@@ -35,6 +35,12 @@ html, body {
   #chart {
     position: relative;
   }
+
+  #chart_header {
+    text-align: center;
+    padding-bottom: 10px;
+  }
+
   .brush rect.extent {
     fill: rgba(100,100,100,0.15);
     stroke: #fff;
