@@ -24,16 +24,16 @@ var m = [60, 0, 10, 0],
     excluded_groups = [];
 
 var colors = {
-"Computer Science": [185,56,73],
-"Computer Science, Human-Computer Interaction": [37,50,75],
-"Computer Science, Media Technology":[10,28,67],
-"Finance":[10,28,67],
-"Human-Computer Interaction": [10,28,67],
-"Information Systems":[10,28,67],
-"Media Management":[10,28,67],
-"Media Technology":[10,28,67],
-"Not sure what to put":[10,28,67],
-"Transport Science":[10,28,67]
+"Computer Science": [288,50,40],
+"Computer Science, Human-Computer Interaction": [303,30,50],
+"Computer Science, Media Technology":[317,74,62],
+"Finance":[332,71,60],
+"Human-Computer Interaction": [348,66,58],
+"Information Systems":[3,62,56],
+"Media Management":[18,58,54],
+"Media Technology":[33,53,52],
+"Not sure what to put":[48,49,50],
+"Transport Science":[63,45,47]
 };
 
 // Scale chart and canvas height
@@ -73,7 +73,6 @@ var svg = d3.select("svg")
 // Load the data and visualization
 d3.csv("Responses_Quantitative+Qualitative.csv", function(raw_data) {
   // Convert quantitative scales to floats
-  console.log(raw_data)
   data = raw_data.map(function(d) {
     for (var k in d) {
       if (!_.isNaN(raw_data[0][k] - 0) && k != 'Alias') {
@@ -380,7 +379,6 @@ function color(d,a) {
     if(d !== undefined) {
         //console.log(d)
         var c = colors[d];
-        console.log(c)
         return ["hsla(",c[0],",",c[1],"%,",c[2],"%,",a,")"].join("");
     }
 }
