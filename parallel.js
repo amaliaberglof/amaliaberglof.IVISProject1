@@ -24,16 +24,16 @@ var m = [60, 0, 10, 0],
     excluded_groups = [];
 
 var colors = {
-  "Transport science": [185,56,73],
-  "Finance": [37,50,75],
-  "Not sure what to put": [325,50,39],
-  "Computer Science, Media Technology": [10,28,67],
-  "Computer Science, Human-Computer Interaction": [271,39,57],
-  "Information systems": [56,58,73],
-  "Human-Computer Interaction": [28,100,52],
-  "Media Technology": [41,75,61],
-  "Media Management": [60,86,61],
-  "Computer science": [30,100,73]
+"Computer Science": [185,56,73],
+"Computer Science, Human-Computer Interaction": [37,50,75],
+"Computer Science, Media Technology":[10,28,67],
+"Finance":[10,28,67],
+"Human-Computer Interaction": [10,28,67],
+"Information Systems":[10,28,67],
+"Media Management":[10,28,67],
+"Media Technology":[10,28,67],
+"Not sure what to put":[10,28,67],
+"Transport Science":[10,28,67]
 };
 
 // Scale chart and canvas height
@@ -71,12 +71,9 @@ var svg = d3.select("svg")
     .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
 // Load the data and visualization
-//d3.csv("IVIS21_Responses.csv", function(raw_data) {
-//d3.csv("Responses_Quantitative.csv", function(raw_data) {
 d3.csv("Responses_Quantitative+Qualitative.csv", function(raw_data) {
-
-
   // Convert quantitative scales to floats
+  console.log(raw_data)
   data = raw_data.map(function(d) {
     for (var k in d) {
       if (!_.isNaN(raw_data[0][k] - 0) && k != 'Alias') {
@@ -247,11 +244,11 @@ function create_legend(colors,brush) {
 
   return legend;
 }
- 
+
 // render polylines i to i+render_speed 
 function render_range(selection, i, max, opacity) {
   selection.slice(i,max).forEach(function(d) {
-    path(d, foreground, color(d.group,opacity));
+    path(d, foreground, color(d.Major,opacity));
   });
 };
 
@@ -274,37 +271,11 @@ function data_table(sample) {
   table
     .append("span")
       .attr("class", "color-block")
-      .style("background", function(d) { return color(d.group,0.85) })
+      .style("background", function(d) { return color(d.Major,0.85) })
 
   table
     .append("span")
       .text(function(d) { return d.Alias; })
-
-// lists all Major responses in #legend
-//TODO: group all answers 
-
-  var nested_data = d3.nest()
-  .key(function(d) { return d.Major; })
-  .entries(sample);
-  console.log(nested_data[0].key)
-  console.log(nested_data)
-
-  var table_major = d3.select("#legend")
-  .html("")
-  .selectAll(".row")
-    .data(sample)
-  .enter().append("div")
-    .on("mouseover", highlight)
-    .on("mouseout", unhighlight);
-
-  table_major
-    .append("span")
-      .attr("class", "color-block")
-      .style("background", function(d) { return color(d.group,0.85) })
-
-  table_major
-    .append("span")
-    .text(function(d) { return d.Major; })
 }
 
 // Adjusts rendering speed 
@@ -334,8 +305,8 @@ function selection_stats(opacity, n, total) {
 // Highlight single polyline
 function highlight(d) {
   d3.select("#foreground").style("opacity", "0.25");
-  d3.selectAll(".row").style("opacity", function(p) { return (d.group == p) ? null : "0.3" });
-  path(d, highlighted, color(d.group,1));
+  d3.selectAll(".row").style("opacity", function(p) { return (d.Major == p) ? null : "0.3" });
+  path(d, highlighted, color(d.Major,1));
 }
 
 // Remove highlight
@@ -407,8 +378,9 @@ function path(d, ctx, color) {
 
 function color(d,a) {
     if(d !== undefined) {
-        console.log(d,a)
+        //console.log(d)
         var c = colors[d];
+        console.log(c)
         return ["hsla(",c[0],",",c[1],"%,",c[2],"%,",a,")"].join("");
     }
 }
@@ -451,7 +423,7 @@ function brush() {
         .style('display', null);
     });
     ;
- 
+
   // bold dimensions with label
   d3.selectAll('.label')
     .style("font-weight", function(dimension) {
@@ -463,7 +435,7 @@ function brush() {
   var selected = [];
   data
     .filter(function(d) {
-      return !_.contains(excluded_groups, d.group);
+      return !_.contains(excluded_groups, d.Major);
     })
     .map(function(d) {
       return actives.every(function(p, dimension) {
@@ -487,7 +459,7 @@ function brush() {
 
   // total by food group
   var tallies = _(selected)
-    .groupBy(function(d) { return d.group; })
+    .groupBy(function(d) { return d.Major; })
 
   // include empty groups
   _(colors).each(function(v,k) { tallies[k] = tallies[k] || []; });
@@ -617,7 +589,7 @@ function actives() {
   var selected = [];
   data
     .filter(function(d) {
-      return !_.contains(excluded_groups, d.group);
+      return !_.contains(excluded_groups, d.Major);
     })
     .map(function(d) {
     return actives.every(function(p, i) {
@@ -666,7 +638,7 @@ window.onresize = function() {
       .attr("height", h + m[0] + m[2])
     .select("g")
       .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
-  
+
   xscale = d3.scale.ordinal().rangePoints([0, w], 1).domain(dimensions);
   dimensions.forEach(function(d) {
     yscale[d].range([h, 0]);
@@ -760,5 +732,5 @@ function light_theme() {
 
 function search(selection,str) {
   pattern = new RegExp(str,"i")
-  return _(selection).filter(function(d) { return pattern.exec(d.name); });
+  return _(selection).filter(function(d) { return pattern.exec(d.Alias); });
 }
