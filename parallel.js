@@ -71,7 +71,11 @@ var svg = d3.select("svg")
     .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
 // Load the data and visualization
-d3.csv("IVIS21_Responses.csv", function(raw_data) {
+//d3.csv("IVIS21_Responses.csv", function(raw_data) {
+//d3.csv("Responses_Quantitative.csv", function(raw_data) {
+d3.csv("Responses_Quantitative+Qualitative.csv", function(raw_data) {
+
+
   // Convert quantitative scales to floats
   data = raw_data.map(function(d) {
     for (var k in d) {
@@ -275,6 +279,32 @@ function data_table(sample) {
   table
     .append("span")
       .text(function(d) { return d.Alias; })
+
+// lists all Major responses in #legend
+//TODO: group all answers 
+
+  var nested_data = d3.nest()
+  .key(function(d) { return d.Major; })
+  .entries(sample);
+  console.log(nested_data[0].key)
+  console.log(nested_data)
+
+  var table_major = d3.select("#legend")
+  .html("")
+  .selectAll(".row")
+    .data(sample)
+  .enter().append("div")
+    .on("mouseover", highlight)
+    .on("mouseout", unhighlight);
+
+  table_major
+    .append("span")
+      .attr("class", "color-block")
+      .style("background", function(d) { return color(d.group,0.85) })
+
+  table_major
+    .append("span")
+    .text(function(d) { return d.Major; })
 }
 
 // Adjusts rendering speed 
