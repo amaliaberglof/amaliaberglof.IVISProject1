@@ -148,6 +148,10 @@ html, body {
     overflow-y: auto;
     border-left: 1px solid rgba(140,140,140,0.5);
   }
+  #copyr {
+    padding-top: 300px;
+    text-align: end;
+  }
   .row {
     cursor: pointer;
   }
@@ -195,9 +199,9 @@ html, body {
     float: left;
   }
   #header {
-    border-bottom: 1px solid rgba(100,100,100,0.35);
-    background: #e2e2e2;
-    padding: 6px 24px 4px;
+    /* border-bottom: 1px solid rgba(100,100,100,0.35); */
+    background: #f7f7f7;
+    padding: 26px 24px 4px;
     line-height: 24px;
   }
   .dark #header {

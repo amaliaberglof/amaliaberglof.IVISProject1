@@ -7,20 +7,20 @@
   </head>
   <body>
   <div id="header">
-    <h1>Nutrient Explorer</h1>
-    <button title="Zoom in on selected data" id="keep-data" disabled="disabled">Keep</button>
+    <h1>Student Explorer</h1>
+    <!-- <button title="Zoom in on selected data" id="keep-data" disabled="disabled">Keep</button>
     <button title="Remove selected data" id="exclude-data" disabled="disabled">Exclude</button>
-    <button title="Export data as CSV" id="export-data">Export</button>
+    <button title="Export data as CSV" id="export-data">Export</button> -->
     <div class="controls">
       <strong id="rendered-count"></strong>/<strong id="selected-count"></strong><!--<strong id="data-count"></strong>-->
       <div class="fillbar"><div id="selected-bar"><div id="rendered-bar">&nbsp;</div></div></div>
-      Lines at <strong id="opacity"></strong> opacity.
-      <span class="settings">
+      <!-- Lines at <strong id="opacity"></strong> opacity. -->
+      <!-- <span class="settings">
         <button id="hide-ticks">Hide Ticks</button>
         <button id="show-ticks" disabled="disabled">Show Ticks</button>
         <button id="dark-theme">Dark</button>
         <button id="light-theme" disabled="disabled">Light</button>
-      </span>
+      </span> -->
     </div>
     <div style="clear:both;"></div>
   </div>
@@ -31,7 +31,7 @@
     <svg></svg>
   </div>
   <div id="wrap">
-    <div class="third" id="controls">
+    <!-- <div class="third" id="controls">
       <div class="bright">
         <h3>What is this?</h3>
         <p>
@@ -73,18 +73,30 @@
           </p>
         </p>
       </div>
+    </div> -->
+    <div  class="third">
+      <small>
+        <!--Last rendered <strong id="render-speed"></strong> lines-->
+      </small>
+      <h3>Majors</h3>
+      <p id="legend">
+      </p>
+    </div>
+    <div class="third">
+      <h3>Students<input type="text" id="search" placeholder="Search Students..."></input></h3>
+      <p id="food-list">
+      </p>
     </div>
     <div  class="third">
       <small>
         <!--Last rendered <strong id="render-speed"></strong> lines-->
       </small>
-      <h3>Food Groups</h3>
-      <p id="legend">
+      <h3>DATA</h3>
+      <p id="data">
       </p>
-    </div>
-    <div class="third">
-      <h3>Sample of 25 entries <input type="text" id="search" placeholder="Search Foods..."></input></h3>
-      <p id="food-list">
+      <p id="copyr">
+        Copyright &copy; 2012, Kai Chang<br/>
+        All rights reserved. Released under the <a href="https://opensource.org/licenses/bsd-3-clause">BSD License</a>.
       </p>
     </div>
   </div>
