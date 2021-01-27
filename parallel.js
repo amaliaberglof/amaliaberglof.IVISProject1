@@ -73,6 +73,7 @@ var svg = d3.select("svg")
 // Load the data and visualization
 d3.csv("Responses_Quantitative+Qualitative.csv", function(raw_data) {
   // Convert quantitative scales to floats
+ // console.log(raw_data)
   data = raw_data.map(function(d) {
     for (var k in d) {
       if (!_.isNaN(raw_data[0][k] - 0) && k != 'Alias') {
@@ -265,7 +266,9 @@ function data_table(sample) {
       .data(sample)
     .enter().append("div")
       .on("mouseover", highlight)
-      .on("mouseout", unhighlight);
+      .on("mouseout", unhighlight)
+      .on("click", expectations)
+      ;
 
   table
     .append("span")
@@ -275,6 +278,15 @@ function data_table(sample) {
   table
     .append("span")
       .text(function(d) { return d.Alias; })
+}
+
+function expectations(d) {
+  var span = d3.select("#expectations")
+  span.select("span").remove();
+  span
+    .append("span")
+    .text(d.Expectations)
+ // console.log(d.Expectations)
 }
 
 // Adjusts rendering speed 
@@ -379,6 +391,7 @@ function color(d,a) {
     if(d !== undefined) {
         //console.log(d)
         var c = colors[d];
+       // console.log(c)
         return ["hsla(",c[0],",",c[1],"%,",c[2],"%,",a,")"].join("");
     }
 }
